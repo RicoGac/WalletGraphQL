@@ -1,0 +1,39 @@
+type Currency {
+    code: ID!
+    name: String!
+    symbol: String
+    salePrice: Float
+    purchasePrice: Float
+}
+
+type Wallet {
+    id: ID!
+    balance: Float
+    createdAt: Float
+    userId: String
+    currency: Currency
+    walletTransactions: [WalletTransaction]
+}
+
+type WalletTransaction {
+    id: ID!
+    timestamp: Float
+    amount: Float
+    type: TransactionType
+}
+
+enum TransactionType {
+    CREDIT
+    DEBIT
+}
+
+type Query {
+    userWallets: [Wallet]
+    findWalletById(id: ID!): Wallet
+    listCurrencies: [Currency]
+}
+
+type Mutation {
+    addWallet(userId: String!, balance: Float!, currencyCode: String!): Wallet
+    transfer(walletFromId: ID!, walletToId: ID!, amount: Float!): [WalletTransaction]
+}
